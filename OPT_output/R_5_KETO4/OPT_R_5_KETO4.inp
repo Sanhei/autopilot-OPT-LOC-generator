@@ -1,0 +1,27 @@
+%pal nprocs 8 end
+# number of processors to use: must be the same as defined in the jobscript
+
+!TPSS def2-SVP TightSCF RIJCOSX autoaux TightOPT D3BJ ABC
+# TPSS: meta-GGA functional
+# def2-SVP: Valence double-zeta basis set with “new” polarization functions
+# Grid4: DFT integration grid / Grid4 or larger is recommended for IR
+# TightSCF: more strict SCF convergence criteria -> more exact single point energy
+# RIJCOX: approximation to speed up the calculation of the exchange term: Mehr-Zentren Integrale werden als Integrale über weniger Zentren approximiert
+# autoaux: Automatically provide an auxiliary basis set / Can be used for Coulomb, exchange and correlation fitting and is as accurate as the optimized auxiliary basis sets at the cost of being up to twice as large.
+# TightOPT: tight optimization criteria for geometry opt. -> more accurate geometry
+# D3BJ: Atom-pairwise dispersion correction to the DFT energy with Becke-Johnson damping: used to avoid near singularities for small distances r(AB)
+# ABC: three-body dispersion correction for three atoms A,B,C
+# D3BJ ABC: invokes Becke-Johnson damping for E(2) and zero damping for E(3)
+
+
+%method
+
+D3S6 1.0000  # Parameters for D3BJ: Becke Jones Dampening
+D3A1 0.3768
+D3S8 1.2576
+D3A2 4.5865
+end
+
+* xyzfile 0 1 R_5_KETO4.xyz
+
+

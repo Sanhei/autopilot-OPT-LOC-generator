@@ -1,0 +1,67 @@
+%pal nproc 8 end
+# use 8 processors, must be the same in jobscript
+
+! B3LYP ZORA-def2-TZVP RIJCOSX TightSCF ZORA D3BJ ABC
+# B3LYP: The popular B3LYP functional (20% HF exchange)
+# ZORA-def2-TZVP: adapted version of def-TZVP basis set
+# RIJCOX: approximation to speed up the calculation of the exchange term: Mehr-Zentren Integrale werden als Integrale über weniger Zentren approximiert
+# TightSCF: more strict SCF convergence criteria -> more exact single point energy
+# Grid5: DFT Integration Grid. Higher accuracy at higher cost is offered by the higher grids.
+# ZORA: Selects the scalar relativistic ZORA Hamiltonian. The ZORA equation is the zeroth order regular approximation to the Dirac equation.
+# GRIDX6: Grid for the COSX approximation of the RIJCOSX approximation
+# D3BJ: Atom-pairwise dispersion correction to the DFT energy with Becke-Johnson damping: used to avoid near singularities for small distances r(AB)
+# ABC: three-body dispersion correction for three atoms A,B,C
+# D3BJ ABC: invokes Becke-Johnson damping for E(2) and zero damping for E(3)
+
+
+%loc
+ LocMet         PM         # Loc Method PipekMezey
+ T_CORE         -99.99     # The Energy window for the first OCC MO to be localized (in a.u.)
+ Random         1          # Take a random seed for start of localization (default)
+ Tol            1e-6       # convergence tolerance
+ MaxIter        64         # max number of iterations
+ OCC            true       # Localize the occupied space
+ VIRT           false      # Do not localize the virtual space
+ T_Strong       0.95       # Thresh that classifies orbitals into strongly-localized at the printing
+ T_Bond         0.85       # Thresh that classifies orbitals in bond-like at the printing
+end
+
+###
+# You will find a file with the extension .loc in the directory where you run the calculation.
+# This is a standard GBW file that you can use for plotting or as input for another calculation.
+# Warning! The localized orbitals have no well defined orbital energy.
+# If you do use them as input for another calculation use GuessMode=CMatrix in the [SCF] block).
+###
+
+
+%output
+Print[P_AtPopMO_L] 1
+Print[P_ReducedOrbPopMO_L] 1
+print[p_mos] true
+print[p_basis] 5
+end
+
+%method
+D3S6 1.0000
+D3A1 0.3981
+D3S8 1.9889
+D3A2 4.4211
+end
+
+###
+# The orbitals for the LR-TDDFT calculation are
+# obtained by performing a single-point calculation with the
+# BH0.57LYP functional[35] on the pre-optimised model structures.
+# This hybrid functional with a high portion of Hartree exchange
+# has been shown to give a very good onset energy for carbon
+# K-edge XA spectra.[35]
+# (from Fabian's paper)
+###
+
+%method
+ScalHFX     = 0.57
+ScalDFX     = 0.35
+end
+# indirect reproduction of the BH0.57LYP functional
+
+* xyzfile 0 1 OPT_R_5_KETO4_trj.xyz
