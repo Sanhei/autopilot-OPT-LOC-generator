@@ -3,7 +3,7 @@ This is used for generating DFT input files
 
 ## Sample's Copyright
 
-The sample files input copyrights are from Fabian's paper (For clearly citation: https://pubs.rsc.org/en/content/articlelanding/2019/CP/C8CP06620E). 
+The sample files input copyrights are from Fabian's paper (For clear citation: https://pubs.rsc.org/en/content/articlelanding/2019/CP/C8CP06620E). 
 
 ## Instruction
 ### Environment
