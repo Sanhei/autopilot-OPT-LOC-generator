@@ -41,7 +41,7 @@ Until it has done, run localization.
 bash LOC_run.sh
 ```
 ### Notice
-Each calculation will use 8 cores as default. They are parallel runing do not share buffer.
+Each calculation will use 8 cores as default. They are parallel runing and do not share buffer.
 
 
 
