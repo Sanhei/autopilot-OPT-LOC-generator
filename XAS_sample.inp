@@ -1,0 +1,43 @@
+%pal nprocs 8 end
+!B3LYP ZORA-def2-TZVP RIJCOSX ZORA D3BJ ABC MORead NoIter
+
+%moinp "sample.loc" #Change to the loc file we generate
+
+%tddft
+orbwin[0] = 0,0,-1,-1           
+				# donor orbital range : 0 to 0
+                                # (C 1s orbital only)
+                                # acceptor orbital range: -1 to -1
+                                # (meaning all virtual orbitals)
+
+orbwin[1] = 0,0,-1,-1           
+				# Not necessary if system is closed-shell.
+
+doquad true                     # Calculate quadrupole contributions.
+
+nroots 150                      # Setting the number of roots (transitions)
+                                # to be calculated.
+
+maxdim 750                      # Setting the maximum dimension of the expansion space.
+                                # Should be 5-10 times the no. of nroots for
+                                # favorable convergence.
+MaxCore 1024
+end
+
+%method
+D3S6 1.0000
+D3A1 0.3981
+D3S8 1.9889
+D3A2 4.4211
+end
+%method
+ScalHFX     = 0.57
+ScalDFX     = 0.35
+end
+
+%output
+print[p_mos] true
+print[p_basis] 5
+end
+
+*xyzfile 0 1 GEOM_OPT.xyz
