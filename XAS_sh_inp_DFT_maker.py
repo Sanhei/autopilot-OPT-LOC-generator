@@ -75,7 +75,6 @@ for subdir, dirs, files in os.walk(dir_input+"reference"):
             orbital_dir = output_path+name_input+"/"+str(i)
             new_dirctory(orbital_dir)
             # Generate files for each orbital
-            shutil.copy(input_xyz, orbital_dir+"/"+file_name)
             # Copy .xyz file
             generate_sh = orbital_dir+"/"+name_input+"_"+str(i)+'.sh'
             shutil.copy('XAS_sample.sh', generate_sh ) 
@@ -89,7 +88,7 @@ for subdir, dirs, files in os.walk(dir_input+"reference"):
             replace_line_text(generate_inp, sample_line, subtitude_line)
             
             sample_line =    '%moinp "sample.loc" #Change to the loc file we generate'
-            subtitude_line = '%moinp "' +'LOC_'+name_input+'"'
+            subtitude_line = '%moinp "' +'LOC_'+name_input+'.loc"'
             replace_line_text(generate_inp, sample_line, subtitude_line)
 
             sample_line =    'orbwin[0] = 0,0,-1,-1'
